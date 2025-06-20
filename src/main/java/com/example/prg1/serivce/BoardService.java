@@ -5,6 +5,7 @@ import com.example.prg1.Repository.BoardRepository;
 import com.example.prg1.dto.BoardForm;
 import com.example.prg1.dto.BoardListInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,10 +35,30 @@ public class BoardService {
 //        List<Board> list = boardRepository.findAll();
 
         List<BoardListInfo> boardList = boardRepository
-                .findAllBy(PageRequest.of(page - 1,10, Sort.by("id").descending() ));
+                .findAllBy(PageRequest.of(page - 1,5, Sort.by("id").descending() ));
+
+
 
         return boardList ;
 //        return list;
 //        return boardRepository.findAll();
+    }
+
+    public Object countlist() {
+
+
+        Page<Board> boardList = boardRepository
+                .findAll(PageRequest.of(1 - 1,5, Sort.by("id")));
+        Integer totalPages = boardList.getTotalPages();
+        List<Integer> result = new ArrayList<>();
+        for (int i=0;i < totalPages;i++) {
+            result.add(i+1);
+        }
+
+        System.out.println("totalPages = " + totalPages);
+        System.out.println("result = " + result);
+//        Integer count = boardRepository.countBy();
+
+        return result;
     }
 }

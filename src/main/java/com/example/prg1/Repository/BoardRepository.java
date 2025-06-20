@@ -11,4 +11,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<BoardListInfo> findAllBy();
 
     List<BoardListInfo> findAllBy(Pageable pageable);
+
+    Integer countBy();
 }

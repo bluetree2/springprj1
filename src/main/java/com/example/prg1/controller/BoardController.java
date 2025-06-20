@@ -52,8 +52,13 @@ public class BoardController {
             Model model) {
 
         var result = boardService.list(page);
+        var count = boardService.countlist();
 
         model.addAttribute("boardList", result);
+        model.addAttribute("boardCount", count);
+
+        System.out.println("boardList = " + result);
+        System.out.println("count = " + count);
         return "board/list";
     }
 }

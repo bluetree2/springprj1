@@ -27,5 +27,10 @@
     </tbody>
 </table>
 
+<!--    <button>prev</button>-->
+    <form th:action="@{/board/list}" method="get">
+        <input th:each="board : ${boardCount}" type="submit" name="page" th:value="${board}">
+    </form>
+<!--    <button>next</button>-->
 </body>
 </html>
