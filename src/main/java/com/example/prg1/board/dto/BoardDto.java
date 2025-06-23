@@ -1,15 +1,13 @@
-package com.example.prg1.dto;
+package com.example.prg1.board.dto;
 
+import com.example.prg1.board.Entity.Board;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * DTO for {@link com.example.prg1.Entity.Board}
+ * DTO for {@link Board}
  */
 //@Value
 @Data

@@ -1,19 +1,17 @@
-package com.example.prg1.serivce;
+package com.example.prg1.board.serivce;
 
-import com.example.prg1.Entity.Board;
-import com.example.prg1.Repository.BoardRepository;
-import com.example.prg1.dto.BoardDto;
-import com.example.prg1.dto.BoardForm;
-import com.example.prg1.dto.BoardListInfo;
+import com.example.prg1.board.Entity.Board;
+import com.example.prg1.board.Repository.BoardRepository;
+import com.example.prg1.board.dto.BoardDto;
+import com.example.prg1.board.dto.BoardForm;
+import com.example.prg1.board.dto.BoardListInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

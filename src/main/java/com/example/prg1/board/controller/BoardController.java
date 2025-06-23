@@ -1,7 +1,7 @@
-package com.example.prg1.controller;
+package com.example.prg1.board.controller;
 
-import com.example.prg1.dto.BoardForm;
-import com.example.prg1.serivce.BoardService;
+import com.example.prg1.board.dto.BoardForm;
+import com.example.prg1.board.serivce.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.Map;
 
 
