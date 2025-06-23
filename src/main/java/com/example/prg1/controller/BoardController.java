@@ -40,9 +40,11 @@ public class BoardController {
     }*/
 
     @PostMapping("write")
-    public String writePost(BoardForm data) {
+    public String writePost(BoardForm data, RedirectAttributes rttr) {
 
         boardService.add(data);
+
+        rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
 
         return "board/write";
     }
@@ -76,9 +78,9 @@ public class BoardController {
     public String remove(Integer id, RedirectAttributes rttr) {
         boardService.remove(id);
 
-        rttr.addFlashAttribute(
-                Map.of("alert",
-                        "","message",id+"번 게시물이 삭제 되었습니다"));
+        rttr.addFlashAttribute("alert",
+                Map.of("code",
+                        "danger","message",id+"번 게시물이 삭제 되었습니다"));
 
         return "redirect:/board/list";
     }

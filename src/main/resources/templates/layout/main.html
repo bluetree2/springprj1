@@ -15,7 +15,11 @@
 <body>
 
 <!--nav.navbar.navbar-expand-lg>.container>a.navbar-brand+button.navbar-toggler>span.navbar-toggler-icon-->
-<nav th:fragment="pageNavbar(current)" class="navbar navbar-expand-lg mb-4 bg-body-tertiary">
+<!--<nav th:fragment="pageNavbar(current)" class="navbar navbar-expand-lg mb-4 bg-body-tertiary">-->
+<div th:fragment="pageNavbar(current)">
+    <nav
+            class="navbar navbar-expand-lg mb-4 bg-body-tertiary">
+
     <div class="container">
         <a th:href="@{/board/list}" class="navbar-brand">PROJECT</a>
         <button class="navbar-toggler"
@@ -40,6 +44,7 @@
             </ul>
         </div>
     </div>
+</nav>
 
     <div th:if="${alert != null}" class="container mb-4">
         <div class="row">
@@ -53,7 +58,7 @@
             </div>
         </div>
     </div>
-</nav>
+</div>
 
 <th:block th:fragment="commonScript">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
