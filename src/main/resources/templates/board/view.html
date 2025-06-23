@@ -23,7 +23,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="textareaContent">본문</label>
-                <textarea class="form-control" type="text" id="textareaContent" th:value="${board.content}"></textarea>
+                <textarea class="form-control" type="text"
+                          id="textareaContent"
+                          rows="10"
+                          th:text="${board.content}"></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="inputWriter">작성자</label>
@@ -38,7 +41,8 @@
                         data-bs-toggle="modal"
                         data-bs-target="#removeModal"
                         >삭제</button>
-                <button class="btn btn-outline-secondary">수정</button>
+                <a th:href="@{/board/edit(id=${board.id})}"
+                        class="btn btn-outline-secondary">수정</a>
             </div>
         </div>
     </div>
@@ -66,10 +70,10 @@
                 <button type="submit" class="btn btn-primary" form="removeForm">
                     삭제
                 </button>
-                <a th:href="@{/board/edit(id=${board.id})}"
-                   1class="btn btn-secondary" >
+                <button th:href="@{/board/edit(id=${board.id})}"
+                   class="btn btn-secondary" >
                     취소
-                </a>
+                </button>
             </div>
         </div>
     </div>

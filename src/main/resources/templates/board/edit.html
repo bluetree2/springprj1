@@ -17,11 +17,11 @@
                     </span>
                     번 게시물 수정
                 </h2>
-                <form class="mb-3" th:action="@{/board/edit}" method="post">
+                <form class="mb-3" id="editForm" th:action="@{/board/edit}" method="post">
                     <input type="hidden" name="id" th:value="${board.id}">
                     <div class="mb-3">
                         <label class="form-label" for="titleInput">제목<label>
-                        <input th:value="${board.title}" type="text" class="form-control" type="text" id="titleInput">
+                        <input th:value="${board.title}" name="title" class="form-control" type="text" id="titleInput">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="contentTextarea">본문</label>
@@ -33,12 +33,37 @@
                         <input th:value="${board.writer}" name="writer" class="form-control" type="text" id="writerInput">
                     </div>
                     <div class="mb-3">
-                        <button></button>
-                    </div>
-                    <div class="mb-3">
-                        <button class="btn btn-primary">저장</button>
+                        <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal">저장</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        저장 확인
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    저장 하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="editForm">
+                        저장
+                    </button>
+                    <a th:href="@{/board/edit(id=${board.id})}"
+                       class="btn btn-secondary" >
+                        취소
+                    </a>
+                </div>
             </div>
         </div>
     </div>
