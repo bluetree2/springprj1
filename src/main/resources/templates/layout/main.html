@@ -40,6 +40,19 @@
             </ul>
         </div>
     </div>
+
+    <div th:if="${alert != null}" class="container mb-4">
+        <div class="row">
+            <div class="col">
+                <div th:text="${alert.message}"
+                     th:classappend="|alert-${alert.code}|"
+                     class="alert"
+                     role="alert">
+                    A simple light alert—check it out!
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <th:block th:fragment="commonScript">
