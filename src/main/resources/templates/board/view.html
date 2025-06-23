@@ -66,10 +66,10 @@
                 <button type="submit" class="btn btn-primary" form="removeForm">
                     삭제
                 </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <a th:href="@{/board/edit(id=${board.id})}"
+                   1class="btn btn-secondary" >
                     취소
-                </button>
-
+                </a>
             </div>
         </div>
     </div>
