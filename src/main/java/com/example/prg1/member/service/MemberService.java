@@ -1,5 +1,6 @@
 package com.example.prg1.member.service;
 
+import com.example.prg1.member.dto.MemberDto;
 import com.example.prg1.member.dto.MemberForm;
 import com.example.prg1.member.dto.MemberListInfo;
 import com.example.prg1.member.entity.Member;
@@ -46,5 +47,69 @@ public class MemberService {
 
     public List<MemberListInfo> list() {
         return memberRepository.findAllBy();
+    }
+
+    public MemberDto get(String id) {
+        Member member = memberRepository.findById(id).get();
+
+        MemberDto dto = new MemberDto();
+        dto.setId(member.getId());
+        dto.setNickName(member.getNickName());
+        dto.setInfo(member.getInfo());
+        dto.setCreatedAt(member.getCreatedAt());
+        return dto;
+    }
+
+    public boolean remove(MemberForm data) {
+        Member member = memberRepository.findById(data.getId()).get();
+
+        String dbPw = member.getPassword();
+        String formPw = data.getPassword();
+
+        if (dbPw.equals(formPw)) {
+            memberRepository.delete(member);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean update(MemberForm data) {
+
+        Member member = memberRepository.findById(data.getId()).get();
+
+        String dbPw = member.getPassword();
+        String formPw = data.getPassword();
+
+        if (dbPw.equals(formPw)) {
+            member.setNickName(data.getNickName());
+            member.setInfo(data.getInfo());
+
+            memberRepository.save(member);
+
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public boolean updatePassword(String id, String oldPw, String newPw) {
+        Member db = memberRepository.findById(id).get();
+
+        String dbPw = db.getPassword();
+
+        System.out.println("dbPw = " + dbPw);
+        System.out.println("oldPw = " + oldPw);
+        System.out.println("newPw = " + newPw);
+        
+        if (dbPw.equals(oldPw)) {
+            db.setPassword(newPw);
+            memberRepository.save(db);
+
+            return true;
+        }else {
+            return false;
+        }
     }
 }
