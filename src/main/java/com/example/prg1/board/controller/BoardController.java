@@ -24,7 +24,6 @@ public class BoardController {
     public String write(HttpSession session, RedirectAttributes rttr) {
         Object user = session.getAttribute("loggedInUser");
 
-        System.out.println("user = " + user);
 
         if (user != null) {
             return "board/write";

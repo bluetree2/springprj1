@@ -26,5 +26,5 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
                 OR b.content LIKE :keyword
                 OR b.writer.nickName LIKE :keyword
             """)
-Page<BoardListInfo> searchBykeyword(String keyword, PageRequest id);
+Page<BoardListInfo> searchByKeyword(String keyword, PageRequest pageRequest);
 }

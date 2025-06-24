@@ -42,23 +42,22 @@ public class BoardService {
 //        List<Board> list = boardRepository.findAll();
 
         Page<BoardListInfo> boardPage = null;
-        List<BoardListInfo> boardList = null;
+
         if (keyword == null || keyword.isBlank()) {
             boardPage = boardRepository
-                    .findAllBy(PageRequest.of(page, 10, Sort.by("id").descending()));
+                    .findAllBy(PageRequest.of(page -1, 10,
+                            Sort.by("id").descending()));
         }else{
             boardPage = boardRepository
-            .searchBykeyword(keyword,PageRequest.of(page - 1,10, Sort.by("id").descending() ));
+            .searchByKeyword("%"+keyword+"%",
+                    PageRequest.of(page - 1,10,
+                            Sort.by("id").descending()));
         }
-        boardList = boardPage.getContent();
+        List<BoardListInfo> boardList = boardPage.getContent();
 
         Integer rightPageNumber = ((page - 1) / 10 + 1) * 10;
         Integer leftPageNumber = rightPageNumber - 9;
         rightPageNumber = Math.min(rightPageNumber, boardPage.getTotalPages());
-
-
-        System.out.println("rightPageNumber: " + rightPageNumber);
-        System.out.println("leftPageNumber: " + leftPageNumber);
 
         var result = Map.of("boardList", boardList,
                 "totalElements", boardPage.getTotalElements(),

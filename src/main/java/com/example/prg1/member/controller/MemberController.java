@@ -39,8 +39,6 @@ public class MemberController {
 
             return "redirect:/board/list";
         }catch (DuplicateKeyException e){
-        System.out.println("data : "+data);
-        System.out.println("e.getMessage()"+e.getMessage());
 
             rttr.addFlashAttribute("alert",
                     Map.of("code", "warning", "message", e.getMessage()));
@@ -107,7 +105,7 @@ public class MemberController {
 
 
         session.invalidate();
-        return "redirect:/member/list";
+        return "redirect:/board/list";
         }else{
             rttr.addFlashAttribute("alert",
                     Map.of("code", "danger", "message", "암호가 일치하지 않습니다."));
@@ -121,7 +119,7 @@ public class MemberController {
     public String edit(String id,
                        @SessionAttribute (value = "loggedInUser", required = false)
                        MemberDto user,
-                       Model model,
+                      Model model,
                        RedirectAttributes rttr) {
 
         MemberDto member = memberService.get(id);

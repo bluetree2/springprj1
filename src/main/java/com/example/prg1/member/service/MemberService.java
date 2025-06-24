@@ -26,6 +26,8 @@ public class MemberService {
 
         Optional<Member> db = memberRepository.findById(data.getId());
 
+//        System.out.println("data = " + data);
+        
         if (db.isEmpty()) {
             Optional<Member> byNickName = memberRepository.findByNickName(data.getNickName());
             if (byNickName.isEmpty()) {
@@ -121,10 +123,6 @@ public class MemberService {
 
         String dbPw = db.getPassword();
 
-        System.out.println("dbPw = " + dbPw);
-        System.out.println("oldPw = " + oldPw);
-        System.out.println("newPw = " + newPw);
-        
         if (dbPw.equals(oldPw)) {
             db.setPassword(newPw);
             memberRepository.save(db);
@@ -143,14 +141,7 @@ public class MemberService {
             if (dbPassword.equals(password)) {
 
                 // memberDto를 session 에 넣기
-                MemberDto dto = new MemberDto();
-                dto.setId(db.get().getId());
-                dto.setNickName(db.get().getNickName());
-                dto.setInfo(db.get().getInfo());
-                dto.setCreatedAt(db.get().getCreatedAt());
-
-                session.setAttribute("loggedInUser", dto);
-
+                addUserToSession(session,db.get());
                 return true;
             }
         }
