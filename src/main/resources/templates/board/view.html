@@ -36,7 +36,7 @@
                 <label class="form-label" for="inputCreated">작성일시</label>
                 <input class="form-control" type="text" id="inputCreated" th:value="${board.createdAt}">
             </div>
-            <div th:if="${session.loggedInUser != null && (session.loggedInUser == board.writer.id)}"  >
+            <div th:if="${session.loggedInUser.id != null && (session.loggedInUser.id == board.writer.id)}"  >
                 <button class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#removeModal"
@@ -70,10 +70,10 @@
                 <button type="submit" class="btn btn-primary" form="removeForm">
                     삭제
                 </button>
-                <button th:href="@{/board/edit(id=${board.id})}"
+                <a th:href="@{/board/edit(id=${board.id})}"
                    class="btn btn-secondary" >
                     취소
-                </button>
+                </a>
             </div>
         </div>
     </div>

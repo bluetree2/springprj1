@@ -61,21 +61,25 @@ public class MemberService {
         return dto;
     }
 
-    public boolean remove(MemberForm data) {
-        Member member = memberRepository.findById(data.getId()).get();
+    public boolean remove(MemberForm data, MemberDto user) {
+        if (user != null) {
+            Member member = memberRepository.findById(data.getId()).get();
+            if (member.getId().equals(user.getId())) {
+                String dbPw = member.getPassword();
+                String formPw = data.getPassword();
 
-        String dbPw = member.getPassword();
-        String formPw = data.getPassword();
-
-        if (dbPw.equals(formPw)) {
-            memberRepository.delete(member);
-            return true;
-        }else{
-            return false;
+                if (dbPw.equals(formPw)) {
+                    memberRepository.delete(member);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         }
+        return false;
     }
 
-    public boolean update(MemberForm data) {
+    public boolean update(MemberForm data, MemberDto user) {
 
         Member member = memberRepository.findById(data.getId()).get();
 
