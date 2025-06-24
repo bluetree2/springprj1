@@ -2,12 +2,15 @@ package com.example.prg1.member.controller;
 
 import com.example.prg1.member.dto.MemberForm;
 import com.example.prg1.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -130,5 +133,34 @@ public class MemberController {
 
         rttr.addAttribute("id", id);
         return  "redirect:/member/edit";
+    }
+
+    @GetMapping("login")
+    public String login() {
+
+
+        return "member/login";
+    }
+
+
+    @GetMapping("login")
+    public String loginForm() {
+
+        return "member/login";
+    }
+
+    @PostMapping("login")
+    public String loginProcess(String id, String password, HttpSession session) {
+
+        boolean result = memberService.login(id, password, session);
+
+        if (result) {
+            // 로그인 성공
+            return "redirect:/board/list";
+        } else {
+            // 로그인 실패
+            return "redirect:/member/login";
+        }
+
     }
 }
