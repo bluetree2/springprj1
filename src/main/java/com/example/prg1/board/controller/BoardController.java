@@ -22,7 +22,9 @@ public class BoardController {
 
     @GetMapping("write")
     public String write(HttpSession session, RedirectAttributes rttr) {
-        Object user = session.getAttribute("loggenInUser");
+        Object user = session.getAttribute("loggedInUser");
+
+        System.out.println("user = " + user);
 
         if (user != null) {
             return "board/write";
@@ -49,10 +51,10 @@ public class BoardController {
             boardService.add(data,user);
             rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
 
-            return "board/write";
+            return "redirect:/board/list";
         }else{
 
-            return "redirect:/board/list";
+            return "redirect:/member/login";
         }
     }
 

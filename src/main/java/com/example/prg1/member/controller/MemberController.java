@@ -83,7 +83,7 @@ public class MemberController {
                     Map.of("code", "danger", "message", "암호가 일치하지 않습니다."));
 
             rttr.addFlashAttribute("id", data.getId());
-        return "redirect:/member/list";
+        return "redirect:/member/view";
         }
     }
 

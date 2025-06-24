@@ -67,7 +67,7 @@ public class BoardService {
     }
 
 
-    public Object get(Integer id) {
+    public BoardDto  get(Integer id) {
         Board board = boardRepository.findById(id).get();
         BoardDto dto = new BoardDto();
         dto.setId(board.getId());
