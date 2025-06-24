@@ -2,13 +2,12 @@ package com.example.prg1.board.controller;
 
 import com.example.prg1.board.dto.BoardForm;
 import com.example.prg1.board.serivce.BoardService;
+import com.example.prg1.member.dto.MemberDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
@@ -22,29 +21,39 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("write")
-    public String write() {
+    public String write(HttpSession session, RedirectAttributes rttr) {
+        Object user = session.getAttribute("loggenInUser");
+
+        if (user != null) {
+            return "board/write";
+        }else{
+            rttr.addFlashAttribute("alert",
+                    Map.of("code","warning",
+                            "message","로그인 후 시도해 주세요"));
+
+            return "redirect:/member/login";
+        }
 
 
-        return "board/write";
     }
 
-    /*@PostMapping("write")
-    public String writePost(String title, String content,String writer) {
-        System.out.println("title = " + title);
-        System.out.println("content = " + content);
-        System.out.println("writer = " + writer);
-
-        return "board/write";
-    }*/
-
     @PostMapping("write")
-    public String writePost(BoardForm data, RedirectAttributes rttr) {
+    public String writePost(BoardForm data,
+                            @SessionAttribute(name = "loggedInUser", required = false)
+                            MemberDto user,
+                            RedirectAttributes rttr) {
+//        Object user = session.getAttribute("loggenInUser");
 
-        boardService.add(data);
+        if (user != null) {
+//            MemberDto dto = (MemberDto) user;
+            boardService.add(data,user);
+            rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
 
-        rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
+            return "board/write";
+        }else{
 
-        return "board/write";
+            return "redirect:/board/list";
+        }
     }
 
     @GetMapping("list")
