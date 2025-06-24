@@ -31,3 +31,24 @@ CREATE TABLE member
 );
 
  drop table member;
+
+# 회원만 글을 작성할 수 있으므로
+# board.writer를 member.id로 수정
+# 회원이 적어도 2명이 있어야 함
+# 외래키 제약 사항 추가
+
+# park
+# son
+
+UPDATE board
+set writer = 'park'
+WHERE id % 2 = 1;
+
+UPDATE board
+set writer = 'son'
+WHERE id % 2 = 0;
+
+Alter TABLE board
+    ADD FOREIGN KEY (write) REFERENCES member (id);
+# ALTER TABLE board
+#     MODIFY writer VARCHAR(100) NOT NULL;
