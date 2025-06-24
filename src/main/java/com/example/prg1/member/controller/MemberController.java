@@ -147,14 +147,15 @@ public class MemberController {
         boolean result = memberService.login(id, password, session);
 
         if (result) {
-            // 로그인 성공
             rttr.addFlashAttribute("alert",
                     Map.of("code", "success", "message", "로그인되었습니다"));
+            // 로그인 성공
             return "redirect:/board/list";
         } else {
-            // 로그인 실패
             rttr.addFlashAttribute("alert",
                     Map.of("code", "warning", "message", "아이디/패스워드가 일치하지 않습니다"));
+            rttr.addFlashAttribute("id", id);
+            // 로그인 실패
             return "redirect:/member/login";
         }
 
