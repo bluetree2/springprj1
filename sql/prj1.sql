@@ -49,6 +49,6 @@ set writer = 'son'
 WHERE id % 2 = 0;
 
 Alter TABLE board
-    ADD FOREIGN KEY (write) REFERENCES member (id);
+    ADD FOREIGN KEY (writer) REFERENCES member (id);
 # ALTER TABLE board
 #     MODIFY writer VARCHAR(100) NOT NULL;

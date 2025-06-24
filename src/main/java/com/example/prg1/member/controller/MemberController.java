@@ -136,14 +136,6 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public String login() {
-
-
-        return "member/login";
-    }
-
-
-    @GetMapping("login")
     public String loginForm() {
 
         return "member/login";
