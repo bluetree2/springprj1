@@ -96,15 +96,17 @@ public class MemberController {
     public String remove(MemberForm data,
                          @SessionAttribute(value = "loggedInUser",required = false)
                          MemberDto user,
+                         HttpSession session,
                          RedirectAttributes rttr) {
         boolean result = memberService.remove(data, user);
-
+// todo : 탈퇴 후 로그아웃 안됨
         if (result){
 
         rttr.addFlashAttribute("alert",
                 Map.of("code", "danger", "message", data.getId()+"님 탈퇴되었습니다."));
 
 
+        session.invalidate();
         return "redirect:/member/list";
         }else{
             rttr.addFlashAttribute("alert",
@@ -140,9 +142,10 @@ public class MemberController {
     public String edit(MemberForm data,
                        @SessionAttribute(value = "loggedInUser",required = false)
                        MemberDto user,
+                       HttpSession session,
                        RedirectAttributes rttr) {
-//todo : 작성한 글이 있으면 탈퇴 안됨
-        boolean result = memberService.update(data, user);
+//todo : 닉네임 변경 후 내브바 완성
+        boolean result = memberService.update(data, user,session);
 
         if (result){
 
@@ -213,7 +216,6 @@ public class MemberController {
     @RequestMapping("logout")
     public String logout(HttpSession session, RedirectAttributes rttr) {
         session.invalidate();
-
         rttr.addFlashAttribute("alert",
                 Map.of("code", "success",
                         "message", "로그아웃 되었습니다."));

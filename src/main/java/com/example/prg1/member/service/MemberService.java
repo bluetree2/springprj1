@@ -1,5 +1,6 @@
 package com.example.prg1.member.service;
 
+import com.example.prg1.board.Repository.BoardRepository;
 import com.example.prg1.member.dto.MemberDto;
 import com.example.prg1.member.dto.MemberForm;
 import com.example.prg1.member.dto.MemberListInfo;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
 
     public void add(MemberForm data) {
 
@@ -69,35 +71,50 @@ public class MemberService {
                 String formPw = data.getPassword();
 
                 if (dbPw.equals(formPw)) {
+                    boardRepository.deleteByWriter(member);
                     memberRepository.delete(member);
                     return true;
-                }else{
-                    return false;
                 }
             }
         }
         return false;
     }
 
-    public boolean update(MemberForm data, MemberDto user) {
+    public boolean update(MemberForm data, MemberDto user, HttpSession session) {
+        if (user != null) {
+            Member member = memberRepository.findById(data.getId()).get();
+            if (member.getId().equals(user.getId())) {
+    // todo : if 문 수정
+                String dbPw = member.getPassword();
+                String formPw = data.getPassword();
 
-        Member member = memberRepository.findById(data.getId()).get();
+                if (dbPw.equals(formPw)) {
+                    member.setNickName(data.getNickName());
+                    member.setInfo(data.getInfo());
 
-        String dbPw = member.getPassword();
-        String formPw = data.getPassword();
+                    memberRepository.save(member);
 
-        if (dbPw.equals(formPw)) {
-            member.setNickName(data.getNickName());
-            member.setInfo(data.getInfo());
+                    // memberDto를 session 에 넣기
+                    addUserToSession(session, member);
 
-            memberRepository.save(member);
-
-            return true;
-        }else{
-            return false;
+                    return true;
+                }
+            }
         }
-
+        return false;
     }
+
+    private static void addUserToSession(HttpSession session, Member member) {
+        MemberDto dto = new MemberDto();
+        dto.setId(member.getId());
+        dto.setNickName(member.getNickName());
+        dto.setInfo(member.getInfo());
+        dto.setCreatedAt(member.getCreatedAt());
+
+        session.setAttribute("loggedInUser", dto);
+    }
+
+
 
     public boolean updatePassword(String id, String oldPw, String newPw) {
         Member db = memberRepository.findById(id).get();
@@ -120,7 +137,7 @@ public class MemberService {
 
     public boolean login(String id, String password, HttpSession session) {
         Optional<Member> db = memberRepository.findById(id);
-
+// todo  : 확인
         if (db.isPresent()) {
             String dbPassword = db.get().getPassword();
             if (dbPassword.equals(password)) {
